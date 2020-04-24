@@ -10,7 +10,7 @@ const {verificaEjecutivoRol,verificarToken} = require('../middlewares/autenticac
 //   res.render('createUsuario');
 // });
 
-router.post('/',verificarToken, verificaEjecutivoRol, (req, res, next) => {
+router.post('/', (req, res, next) => {
 
   let body = req.body;
   let usuario = new Usuario({
