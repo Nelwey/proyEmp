@@ -1,0 +1,19 @@
+{
+  "name": "proyectoempresarial",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server/app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-handlebars": "^4.0.3",
+    "hbs": "~4.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.10",
+    "mongoose-unique-validator": "^2.0.3",
+    "underscore": "^1.10.2"
+  }
+}
