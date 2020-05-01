@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
       })
     }
 
-    //si existe el usuario
+    //si no existe el usuario
     if (!usuarioDB) {
       return res.status(400).json({
         ok: false,
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
       });
     }
 
-    //validando el password
+    //si la contraseña es erronea
     if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
       return res.status(400).json({
         ok: false,
@@ -49,19 +49,23 @@ router.post('/', (req, res) => {
 
     let token = jwt.sign({
       usuario: usuarioDB
-    }, process.env.SEED, {
-      expiresIn: process.env.CADUCIDAD_TOKEN
-    });
+    }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
-    res.send(token);
+    res.status(200).json({
+      ok: true,
+      token
+    });
   });
 });
 
+
+
+
+
 router.get('/logout', (req, res, next) => {
   res.json({
-    message:'Sesion cerrada'
+    message: 'Sesion cerrada'
   });
-
 })
 
 

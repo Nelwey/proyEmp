@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-
-
 //Verificar token
 let verificarToken = (req, res, next) => {
-  let token = process.env.TOKEN;
+
+  if (req.headers.authorization == null) {
+    res.status(400).send('Token vacio');
+  }
+
+  let token = req.headers.authorization.split(' ')[1]; // authorization
+  // let token = req.header('token'); 
 
   jwt.verify(token, process.env.SEED, (err, decoded) => {
 
@@ -16,7 +20,6 @@ let verificarToken = (req, res, next) => {
         }
       });
     }
-
     req.usuario = decoded.usuario;
     next();
   });
@@ -28,8 +31,8 @@ let verificarToken = (req, res, next) => {
 
 let verificaEjecutivoRol = (req, res, next) => {
 
-  let usuario = req.usuario;
-  if (usuario.rol === 'ejecutivo') {
+  let usuarioDB = req.usuario;
+  if (usuarioDB.rol === 'ejecutivo') {
     next();
   } else {
     return res.json({

@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const Cliente = require('../models/cliente');
-const {verificaEjecutivoRol,verificarToken} = require('../middlewares/autenticacion');
+const {
+  verificaEjecutivoRol,
+  verificarToken
+} = require('../middlewares/autenticacion');
 
 
-router.get('/:ci', verificarToken, verificaEjecutivoRol,(req, res, next) => {
-
+router.get('/:ci', verificarToken, (req, res, next) => {
   let ci = req.params.ci;
 
-  Cliente.findOne({ci})
+  Cliente.findOne({
+      ci
+    })
     .exec((err, clienteDB) => {
       if (err) {
         return res.status(500).json({
@@ -34,7 +38,7 @@ router.get('/:ci', verificarToken, verificaEjecutivoRol,(req, res, next) => {
 
 
 
-router.post('/', verificarToken ,verificaEjecutivoRol, (req, res, next) => {
+router.post('/', verificarToken, verificaEjecutivoRol, (req, res, next) => {
 
   let body = req.body;
   let cliente = new Cliente({
