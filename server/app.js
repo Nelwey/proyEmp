@@ -17,7 +17,10 @@ app.use(express.urlencoded({
   extended: false
 }));
 
-app.use(cors());
+app.use(cors({
+  origin:'http://localhost:8080',
+  optionsSuccessStatus:200
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
