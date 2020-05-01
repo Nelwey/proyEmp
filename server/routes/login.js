@@ -54,10 +54,9 @@ router.post('/', (req, res) => {
     });
 
     res.json({
-      usuarioDB
-    })
-    process.env.TOKEN = token;
-    console.log('TOKEN: ' + process.env.TOKEN);
+      ok:true,
+      token
+    });
   });
 });
 
@@ -65,8 +64,6 @@ router.get('/logout', (req, res, next) => {
   res.json({
     message:'Sesion cerrada'
   });
-  process.env.TOKEN = '';
-  console.log('TOKEN: ' + process.env.TOKEN);
 
 })
 
