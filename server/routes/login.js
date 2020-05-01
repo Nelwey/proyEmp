@@ -53,10 +53,7 @@ router.post('/', (req, res) => {
       expiresIn: process.env.CADUCIDAD_TOKEN
     });
 
-    res.json({
-      ok:true,
-      token
-    });
+    res.send(token);
   });
 });
 
