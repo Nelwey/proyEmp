@@ -2,6 +2,7 @@
 //PUERTO
 //====================================
 const PORT = process.env.PORT || 3000;
+process.env.TOKEN = ''; 
 
 
 // ===================================
@@ -11,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 const ENVIRONMENT = process.env.NODE_ENV || 'dev';
 
 
-process.env.CADUCIDAD_TOKEN = '48h';
+process.env.CADUCIDAD_TOKEN = '1h';
 
 // ===================================
 //SEED  de autenticacion

@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const exphbs = require('express-handlebars')
+const cors = require('cors');
 
 var app = express();
 
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: false
 }));
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +37,8 @@ app.use('/cliente', clienteRouter);
 
 mongoose.connect(env.URLDB, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex:true
 }, (err, res) => {
   if (err) throw err;
   console.log('Base de datos ONLINE');
