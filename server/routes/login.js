@@ -51,10 +51,6 @@ router.post('/', (req, res) => {
       usuario: usuarioDB
     }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
-    // res.status(200).json({
-    //   ok: true,
-    //   token
-    // });
     res.status(200);
     res.send(token);
   });

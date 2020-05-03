@@ -25,10 +25,6 @@ let clienteSchema = new Schema({
     type: String,
     required: [true, 'El telefono es obligatorio']
   },
-  nro_cuenta: {
-    type: String,
-    required: [true, 'El nro de cuenta es obligatorio']
-  },
   codigo_huella: {
     type: String,
     default: ''

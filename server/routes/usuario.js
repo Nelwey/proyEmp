@@ -2,15 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
-const {verificaEjecutivoRol,verificarToken} = require('../middlewares/autenticacion');
+const {
+  verificarToken,
+  verificaAdminRol,
+} = require('../middlewares/autenticacion');
 
 
-// // renderizar formulario crear usuario
-// router.get('/', (req, res, next) => {
-//   res.render('createUsuario');
-// });
-
-router.post('/', (req, res, next) => {
+router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
 
   let body = req.body;
   let usuario = new Usuario({
@@ -21,7 +19,7 @@ router.post('/', (req, res, next) => {
     rol: body.rol
   });
 
-  usuario.save((err, usuarioDB) => { 
+  usuario.save((err, usuarioDB) => {
     if (err) {
       return res.status(400).json({
         ok: false,
@@ -29,9 +27,9 @@ router.post('/', (req, res, next) => {
       });
     }
 
-    res.json({ 
+    res.json({
       ok: true,
-      usuario: usuarioDB 
+      usuario: usuarioDB
     })
   });
 });

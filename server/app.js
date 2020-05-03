@@ -42,12 +42,14 @@ app.use('/', indexRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/login', loginRouter);
 app.use('/cliente', clienteRouter);
+app.use('/cuenta', require('./routes/cuenta'));
 
 
 mongoose.connect(env.URLDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex:true
+  useCreateIndex:true,
+  useFindAndModify:false
 }, (err, res) => {
   if (err) throw err;
   console.log('Base de datos ONLINE');

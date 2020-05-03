@@ -27,7 +27,8 @@ process.env.SEED = process.env.SEED || 'seed_desarrollo';
 
 var URLDB;
 if (ENVIRONMENT === 'dev') {
-  URLDB = 'mongodb://localhost:27017/pempresarialbd';
+  // URLDB = 'mongodb://localhost:27017/pempresarialbd';
+  URLDB = 'mongodb+srv://nelwey:nelwey@cluster0-zzplm.mongodb.net/pempresarialbd?retryWrites=true&w=majority';
 } else {
   URLDB = process.env.MONGO_URI;
 }

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 let verificarToken = (req, res, next) => {
 
   if (req.headers.authorization == null) {
-    res.status(400).send('Token vacio');
+    return res.status(400).send('Token vacio');
   }
 
   let token = req.headers.authorization.split(' ')[1]; // authorization
@@ -44,9 +44,27 @@ let verificaEjecutivoRol = (req, res, next) => {
   }
 }
 
+let verificaAdminRol = (req, res, next) => {
+
+  let usuarioDB = req.usuario;
+  if (usuarioDB.rol === 'admin') {
+    next();
+  } else {
+    return res.json({
+      ok: false,
+      err: {
+        message: 'El usuario no es administrativo'
+      }
+    });
+  }
+}
+
+
+
 
 
 module.exports = {
   verificarToken,
-  verificaEjecutivoRol
+  verificaEjecutivoRol,
+  verificaAdminRol
 }

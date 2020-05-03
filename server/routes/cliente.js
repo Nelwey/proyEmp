@@ -7,7 +7,7 @@ const {
 } = require('../middlewares/autenticacion');
 
 
-router.get('/:ci', verificarToken, (req, res, next) => {
+router.get('/:ci', verificarToken, verificaEjecutivoRol, (req, res, next) => {
   let ci = req.params.ci;
 
   Cliente.findOne({
@@ -36,8 +36,6 @@ router.get('/:ci', verificarToken, (req, res, next) => {
 
 });
 
-
-
 router.post('/', verificarToken, verificaEjecutivoRol, (req, res, next) => {
 
   let body = req.body;
@@ -47,8 +45,7 @@ router.post('/', verificarToken, verificaEjecutivoRol, (req, res, next) => {
     nombres: body.nombres,
     apellidos: body.apellidos,
     direccion: body.direccion,
-    telefono: body.telefono,
-    nro_cuenta: body.nro_cuenta
+    telefono: body.telefono
   });
 
   cliente.save((err, clienteDB) => {
@@ -64,6 +61,35 @@ router.post('/', verificarToken, verificaEjecutivoRol, (req, res, next) => {
       usuario: clienteDB
     })
   });
+});
+
+router.put('/:ci', verificarToken, verificaEjecutivoRol, async (req, res) => {
+
+  let ci = req.params.ci;
+  let codigo_huella = req.body;
+  const cliente = await Cliente.findOne({ci});
+  if (!cliente) {
+    return res.status(404).json({
+      ok: false,
+      message: 'No existe el cliente en la bd'
+    });
+  } else {
+    Cliente.findByIdAndUpdate(cliente._id, codigo_huella, { new: true})
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        ok: true,
+        message: `codigo de huella actualizada correctamente!`,
+        result
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        ok: false,
+        error: err
+      });
+    });
+  }
 });
 
 module.exports = router;
