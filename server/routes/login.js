@@ -39,20 +39,29 @@ router.post('/', (req, res) => {
 
     //si la contraseña es erronea
     if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
-      return res.status(400).json({
-        ok: false,
-        err: {
-          message: 'Usuario o (contraseña) incorrectos'
-        }
-      });
+      // return res.status(400).json({
+      //   ok: false,
+      //   err: {
+      //     message: 'Usuario o (contraseña) incorrectos'
+      //   }
+      // });
+      res.status(400);
+      return res.send('Usuario o (contraseña) incorrectos');
+      
     }
 
     let token = jwt.sign({
       usuario: usuarioDB
     }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
+    // res.status(200).json({
+    //   token,
+    //   usuarioDB
+    // });
     res.status(200);
     res.send(token);
+    // res.send(`Bienvenido al sistema ${usuarioDB.nombre}`);
+    
   });
 });
 

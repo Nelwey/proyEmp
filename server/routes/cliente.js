@@ -28,10 +28,12 @@ router.get('/:ci', verificarToken, verificaEjecutivoRol, (req, res, next) => {
           }
         });
       }
-      res.status(201).json({
-        ok: true,
-        cliente: clienteDB
-      });
+      // res.status(201).json({
+      //   ok: true,
+      //   cliente: clienteDB
+      // });
+      res.status(201);
+      res.send('El ci es valido');
     });
 
 });
@@ -77,11 +79,13 @@ router.put('/:ci', verificarToken, verificaEjecutivoRol, async (req, res) => {
     Cliente.findByIdAndUpdate(cliente._id, codigo_huella, { new: true})
     .exec()
     .then(result => {
-      res.status(200).json({
-        ok: true,
-        message: `codigo de huella actualizada correctamente!`,
-        result
-      });
+      // res.status(200).json({
+      //   ok: true,
+      //   message: `codigo de huella actualizada correctamente!`,
+      //   result
+      // });
+      res.status(200);
+      res.send('codigo de huella actualizada correctamente!');
     })
     .catch(err => {
       res.status(500).json({
