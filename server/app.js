@@ -43,6 +43,7 @@ app.use('/usuario', usuarioRouter);
 app.use('/login', loginRouter);
 app.use('/cliente', clienteRouter);
 app.use('/cuenta', require('./routes/cuenta'));
+app.use('/transaccion', require('./routes/transaccion'));
 
 
 mongoose.connect(env.URLDB, {

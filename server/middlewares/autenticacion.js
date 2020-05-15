@@ -59,6 +59,21 @@ let verificaAdminRol = (req, res, next) => {
   }
 }
 
+let verificaComercianteRol = (req, res, next) => {
+
+  let usuarioDB = req.usuario;
+  if (usuarioDB.rol === 'comerciante') {
+    next();
+  } else {
+    return res.json({
+      ok: false,
+      err: {
+        message: 'El usuario no es comerciante'
+      }
+    });
+  }
+}
+
 
 
 
@@ -66,5 +81,6 @@ let verificaAdminRol = (req, res, next) => {
 module.exports = {
   verificarToken,
   verificaEjecutivoRol,
-  verificaAdminRol
+  verificaAdminRol,
+  verificaComercianteRol
 }

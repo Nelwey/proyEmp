@@ -47,7 +47,8 @@ router.post('/', verificarToken, verificaEjecutivoRol, (req, res, next) => {
     nombres: body.nombres,
     apellidos: body.apellidos,
     direccion: body.direccion,
-    telefono: body.telefono
+    telefono: body.telefono,
+    ping: body.ping
   });
 
   cliente.save((err, clienteDB) => {
@@ -69,31 +70,37 @@ router.put('/:ci', verificarToken, verificaEjecutivoRol, async (req, res) => {
 
   let ci = req.params.ci;
   let codigo_huella = req.body;
-  const cliente = await Cliente.findOne({ci});
+  const cliente = await Cliente.findOne({
+    ci
+  });
   if (!cliente) {
     return res.status(404).json({
       ok: false,
       message: 'No existe el cliente en la bd'
     });
   } else {
-    Cliente.findByIdAndUpdate(cliente._id, codigo_huella, { new: true})
-    .exec()
-    .then(result => {
-      // res.status(200).json({
-      //   ok: true,
-      //   message: `codigo de huella actualizada correctamente!`,
-      //   result
-      // });
-      res.status(200);
-      res.send('codigo de huella actualizada correctamente!');
-    })
-    .catch(err => {
-      res.status(500).json({
-        ok: false,
-        error: err
+    Cliente.findByIdAndUpdate(cliente._id, codigo_huella, {
+        new: true
+      })
+      .exec()
+      .then(result => {
+        // res.status(200).json({
+        //   ok: true,
+        //   message: `codigo de huella actualizada correctamente!`,
+        //   result
+        // });
+        res.status(200);
+        res.send('codigo de huella actualizada correctamente!');
+      })
+      .catch(err => {
+        res.status(500).json({
+          ok: false,
+          error: err
+        });
       });
-    });
   }
 });
+
+
 
 module.exports = router;
