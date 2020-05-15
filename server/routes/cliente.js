@@ -47,8 +47,7 @@ router.post('/', verificarToken, verificaEjecutivoRol, (req, res, next) => {
     nombres: body.nombres,
     apellidos: body.apellidos,
     direccion: body.direccion,
-    telefono: body.telefono,
-    ping: body.ping
+    telefono: body.telefono
   });
 
   cliente.save((err, clienteDB) => {

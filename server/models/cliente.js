@@ -28,12 +28,7 @@ let clienteSchema = new Schema({
   codigo_huella: {
     type: String,
     default: ''
-  },
-  ping: {
-    type: String,
-    required: [true, 'El ping es obligatorio']
   }
-  
 });
 
 
