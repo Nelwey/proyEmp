@@ -7,34 +7,28 @@ const {
 } = require('../middlewares/autenticacion');
 
 
-router.get('/:ci', verificarToken, verificaEjecutivoRol, (req, res, next) => {
+router.get('/:ci', verificarToken, verificaEjecutivoRol, async (req, res, next) => {
   let ci = req.params.ci;
 
-  Cliente.findOne({
-      ci
-    })
-    .exec((err, clienteDB) => {
-      if (err) {
-        return res.status(500).json({
-          ok: false,
-          err
-        });
-      }
-      if (!clienteDB) {
-        res.status(400).json({
-          ok: false,
-          err: {
-            message: 'No existe el cliente en la db'
-          }
-        });
-      }
-      // res.status(201).json({
-      //   ok: true,
-      //   cliente: clienteDB
-      // });
-      res.status(201);
-      res.send('El ci es valido');
+  try {
+    const cliente = await Cliente.findOne({ci});
+    if (!cliente) {
+      throw new Error('No existe el cliente en la db')
+    } else {
+      return res.status(200).json({
+        ok: true,
+        message: 'El ci es valido'
+      });
+    }
+
+  } catch (error) {
+
+    res.status(404).json({
+      ok: false,
+      error: error.message
     });
+
+  }
 
 });
 
