@@ -57,7 +57,7 @@ router.put('/:id', verificarToken, verificaComercianteRol, async (req, res, next
       const montoActualizado = await Cuenta.findOneAndUpdate({idCliente:objClienteCuenta.idCliente}, {monto:montoActual}, {new: true});
       if(!montoActualizado){
 
-        throw new Error('Error, no se pudo realizar la transaccion');
+        throw new Error('Error, no se pudo realizar la transaccion!');
 
       }else{
        
