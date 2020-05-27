@@ -62,7 +62,7 @@ router.put('/:id', verificarToken, verificaComercianteRol, async (req, res, next
       }else{
        
         res.status(200);
-        res.send('Transaccion realizada correctamente!')
+        res.send('Transaccion realizada correctamente!');
       }
   
     }else{
