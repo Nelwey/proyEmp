@@ -14,7 +14,7 @@ let cuentaSchema = new Schema({
   },
   monto: {
     type: Number,
-    default: 100
+    default: 1000
   }
 });
 
