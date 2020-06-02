@@ -16,7 +16,8 @@ router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
     nombre: body.nombre,
     ci: body.ci,
     password: bcrypt.hashSync(body.password, 10),
-    rol: body.rol
+    rol: body.rol,
+    tiendaid:body.tiendaid
   });
 
   usuario.save((err, usuarioDB) => {
@@ -30,7 +31,7 @@ router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
     res.json({
       ok: true,
       usuario: usuarioDB
-    })
+    });
   });
 });
 

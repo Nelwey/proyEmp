@@ -26,6 +26,10 @@ let usuarioSchema = new Schema({
     type: String,
     default: 'ejecutivo',
     enum: rolesValidos
+  },
+  tiendaid:{
+    type: Schema.Types.ObjectId,
+    ref: 'Tienda'
   }
 });
 

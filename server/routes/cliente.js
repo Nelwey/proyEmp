@@ -16,7 +16,7 @@ router.get('/:ci', verificarToken, verificaEjecutivoRol, async (req, res, next) 
       ci
     });
     if (!cliente) {
-      throw new Error('No existe el cliente en la db')
+      throw new Error('No existe el cliente en la db');
     } else {
       return res.status(200).json({
         ok: true,
@@ -47,7 +47,7 @@ router.post('/cuenta', verificarToken, verificaEjecutivoRol, async (req, res, ne
       nombres: body.nombres,
       apellidos: body.apellidos,
       direccion: body.direccion,
-      telefono: body.telefono
+      telefono: body.telefono,
     });
 
     const newCliente = await cliente.save();
