@@ -62,7 +62,7 @@ router.post('/cuenta', verificarToken, verificaEjecutivoRol, async (req, res, ne
       } else {
         let cuenta = new Cuenta({
           idCliente: clienteBD._id,
-          nroCuenta: body.nroCuenta
+          nroCuenta: body.nro_cuenta
         });
 
         const cuentaNueva = await cuenta.save();
