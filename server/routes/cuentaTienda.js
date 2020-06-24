@@ -7,7 +7,7 @@ const {
 } = require('../middlewares/autenticacion');
 
 
-router.post('/', (req, res, next) => {
+router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
 
   let body = req.body;
   let cuentatienda = new cuentaTienda({

@@ -6,7 +6,7 @@ const {
 } = require('../middlewares/autenticacion');
 
 
-router.post('/', async (req, res, next) => {
+router.post('/', verificarToken, async (req, res, next) => {
 
   let body = req.body;
   let banco = new Banco({

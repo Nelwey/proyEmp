@@ -3,11 +3,12 @@ const router = express.Router();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const {
-  verificarToken
+  verificarToken,
+  verificaAdminRol,
 } = require('../middlewares/autenticacion');
 
 
-router.post('/', (req, res, next) => {
+router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
 
   let body = req.body;
   let usuario = new Usuario({
