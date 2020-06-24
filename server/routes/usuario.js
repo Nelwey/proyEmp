@@ -7,7 +7,7 @@ const {
 } = require('../middlewares/autenticacion');
 
 
-router.post('/', verificarToken, (req, res, next) => {
+router.post('/', (req, res, next) => {
 
   let body = req.body;
   let usuario = new Usuario({
