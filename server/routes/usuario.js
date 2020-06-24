@@ -3,12 +3,11 @@ const router = express.Router();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const {
-  verificarToken,
-  verificaAdminRol,
+  verificarToken
 } = require('../middlewares/autenticacion');
 
 
-router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
+router.post('/', verificarToken, (req, res, next) => {
 
   let body = req.body;
   let usuario = new Usuario({
@@ -17,7 +16,7 @@ router.post('/', verificarToken, verificaAdminRol, (req, res, next) => {
     ci: body.ci,
     password: bcrypt.hashSync(body.password, 10),
     rol: body.rol,
-    tiendaid:body.tiendaid
+    tiendaid:body.tiendaid,
   });
 
   usuario.save((err, usuarioDB) => {

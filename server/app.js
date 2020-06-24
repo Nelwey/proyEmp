@@ -45,6 +45,8 @@ app.use('/cliente', clienteRouter);
 app.use('/cuenta', require('./routes/cuenta'));
 app.use('/transaccion', require('./routes/transaccion'));
 app.use('/tienda', require('./routes/tienda'));
+app.use('/banco', require('./routes/banco'));
+app.use('/cuentatienda', require('./routes/cuentaTienda'));
 
 
 mongoose.connect(env.URLDB, {

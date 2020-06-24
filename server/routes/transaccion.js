@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Cliente = require('../models/cliente');
 const Cuenta = require('../models/cuenta');
+const CuentaTienda = require('../models/cuentaTienda');
 const {
   verificaComercianteRol,
   verificarToken
@@ -46,6 +47,7 @@ router.get('/cliente/:ci', verificarToken, verificaComercianteRol, async (req, r
 router.put('/:id', verificarToken, verificaComercianteRol, async (req, res, next) => {
   const id = req.params.id;
   const monto = req.body.monto;
+  const cuentaTiendaId = req.body.cuentaTiendaId;
 
   const objClienteCuenta = await Cuenta.findOne({idCliente:id});
   if(!objClienteCuenta){
@@ -61,8 +63,27 @@ router.put('/:id', verificarToken, verificaComercianteRol, async (req, res, next
 
       }else{
        
-        res.status(200);
-        res.send('Transaccion realizada correctamente!');
+        const objcuentaTienda = await CuentaTienda.findOne({_id:cuentaTiendaId});
+        if(!objcuentaTienda){
+
+          throw new Error('No existe una cuenta de tienda con ese id');
+
+        }else{
+
+          var montoActualTienda = objcuentaTienda.monto;
+          montoActualTienda = montoActualTienda + monto;
+          const montoActualizadoTienda = await CuentaTienda.findOneAndUpdate({_id:cuentaTiendaId}, {monto:montoActualTienda}, {new: true});
+          if(!montoActualizadoTienda){
+            throw new Error('Error, no se pudo realizar la transaccion!');
+          }else{
+
+            res.status(200);
+            res.send('Transaccion realizada correctamente!');
+
+          }
+
+        }
+       
       }
   
     }else{

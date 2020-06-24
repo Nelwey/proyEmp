@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Usuario = require('../models/usuario');
 const Tienda = require('../models/tienda');
+const CuentaTienda = require('../models/cuentaTienda');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -14,7 +15,7 @@ router.get('/', (req, res, next) => {
 
 
 router.post('/', async (req, res) => {
-  let body = req.body;
+  let body = req.body;  
   
   try {
     const usuarioDB = await Usuario.findOne({ ci: body.ci});
@@ -30,18 +31,29 @@ router.post('/', async (req, res) => {
       throw new Error("No hay tienda asignada");
     }else{
 
-      let token = jwt.sign({
-        usuario: usuarioDB
-      }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
-  
-  
-      res.status(200).json({
-        token,
-        rol:usuarioDB.rol,
-        nombre:usuarioDB.nombre,
-        tienda:tienda.nombre
-      });
+      const cuentaTienda = await CuentaTienda.findOne({idTienda:tienda._id});
+      if(!cuentaTienda){
+        throw new Error("No hay cuentaTienda asignada");
+      }else{
 
+        let token = jwt.sign({
+          usuario: usuarioDB
+        }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
+    
+    
+        res.status(200).json({
+          token,
+          rol:usuarioDB.rol,
+          nombre:usuarioDB.nombre,
+          tienda:tienda.nombre,
+          cuentaTiendaId:cuentaTienda._id,
+          nroCuenta:cuentaTienda.nroCuenta
+        });
+  
+
+      }
+
+     
     }
   
   } catch (error) {

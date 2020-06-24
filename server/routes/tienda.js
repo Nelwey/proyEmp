@@ -11,7 +11,8 @@ router.post('/', verificarToken, async (req, res, next) => {
 
   let body = req.body;
   let tienda = new Tienda({
-    nombre: body.nombre
+    nombre: body.nombre,
+    idBanco: body.idBanco
   });
 
   try {
